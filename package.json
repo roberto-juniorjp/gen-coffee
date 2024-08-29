@@ -70,6 +70,7 @@
     "jest-preset-angular": "^11.0.1",
     "nx": "19.6.4",
     "prettier": "^2.6.2",
+    "prisma": "^5.19.0",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.5.2",
