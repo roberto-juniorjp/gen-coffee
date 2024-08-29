@@ -12,3 +12,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Models
+model Coffee {
+  id String @id @default(cuid())
+  name String
+  description String
+  image String
+  price Int
+  sku String
+}
