@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: coffee
+      POSTGRES_USER: robertojunior
+      POSTGRES_PASSWORD: mytechnicaltest
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: robertojunior
+      DATABASE_PASSWORD: mytechnicaltest
+      DATABASE_NAME: coffee
+    depends_on:
+      - db
+    volumes:
+      - ./apps/backend:/app/backend
+      - /app/backend/node_modules
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

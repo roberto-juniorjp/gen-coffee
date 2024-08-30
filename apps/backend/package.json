@@ -1,0 +1,24 @@
+{
+    "name": "backend",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/backend/src",
+    "projectType": "application",
+    "tags": [],
+    "targets": {
+      "build": {
+        "executor": "@nrwl/node:build",
+        "options": {
+          "outputPath": "dist/apps/backend",
+          "main": "apps/backend/src/main.ts",
+          "tsConfig": "apps/backend/tsconfig.app.json",
+          "assets": ["apps/backend/src/assets"]
+        }
+      },
+      "serve": {
+        "executor": "@nrwl/node:execute",
+        "options": {
+          "buildTarget": "backend:build"
+        }
+      }
+    }
+  }
