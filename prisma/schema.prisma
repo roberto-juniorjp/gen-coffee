@@ -14,11 +14,11 @@ datasource db {
 }
 
 // Models
-model Coffee {
-  id String @id @default(cuid())
-  name String
-  description String
-  image String
-  price Int
-  sku String
-}
+// model Coffee {
+//   id String @id @default(cuid())
+//   name String
+//   description String
+//   image String
+//   price Int
+//   sku String
+// }
