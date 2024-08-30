@@ -8,15 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { OrderItemsService } from './order-items.service';
-import { CreateOrderItemDto } from './dto/create-order-item.dto';
-import { UpdateOrderItemDto } from './dto/update-order-item.dto';
+import { Prisma } from '@prisma/client';
 
 @Controller('order-items')
 export class OrderItemsController {
   constructor(private readonly orderItemsService: OrderItemsService) {}
 
   @Post()
-  create(@Body() createOrderItemDto: CreateOrderItemDto) {
+  create(@Body() createOrderItemDto: Prisma.OrderItemCreateInput) {
     return this.orderItemsService.create(createOrderItemDto);
   }
 
@@ -33,7 +32,7 @@ export class OrderItemsController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateOrderItemDto: UpdateOrderItemDto
+    @Body() updateOrderItemDto: Prisma.OrderItemUpdateInput
   ) {
     return this.orderItemsService.update(+id, updateOrderItemDto);
   }
