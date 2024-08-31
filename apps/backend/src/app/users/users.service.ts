@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
 
@@ -6,6 +6,19 @@ import { DatabaseService } from '../database/database.service';
 export class UsersService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createUserDto: Prisma.UserCreateInput) {
+    // Verifica se os campos obrigatórios estão presentes
+    if (!createUserDto.email || !createUserDto.password || !createUserDto.name) {
+      throw new BadRequestException('Name, email, and password are required');
+    }
+
+    // Verifica se o e-mail já está sendo usado
+    const existingUser = await this.databaseService.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+    if (existingUser) {
+      throw new BadRequestException('Email is already in use');
+    }
+
     return this.databaseService.user.create({ data: createUserDto });
   }
 
@@ -14,17 +27,31 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    return this.databaseService.user.findUnique({ where: { id } });
+    const user = await this.databaseService.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+    return user;
   }
 
   async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
+    const user = await this.databaseService.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
     return this.databaseService.user.update({
       where: { id },
       data: updateUserDto,
-    })
+    });
   }
 
   async remove(id: number) {
+    const user = await this.databaseService.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
     return this.databaseService.user.delete({ where: { id } });
   }
 }
