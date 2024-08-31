@@ -10,11 +10,15 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   const config = new DocumentBuilder()
-    .setTitle('Gen Coffee API')
-    .setDescription('Main API for the Gen Coffee API Project')
-    .setVersion('1.0')
-    .addTag('main-api')
-    .build();
+  .setTitle('Gen Coffee API')
+  .setDescription('Main API for the Gen Coffee API Project')
+  .setVersion('1.0')
+  .addTag('Products', 'Endpoints for managing products')
+  .addTag('Categories', 'Endpoints for managing categories')
+  .addTag('Users', 'Endpoints for managing users')
+  .addTag('Orders', 'Endpoints for managing orders')
+  .addTag('Order Items', 'Endpoints for managing order items')
+  .build();
   
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);

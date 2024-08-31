@@ -9,13 +9,15 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
-import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new user' })
   @ApiBody({
     description: 'Create a new user',
     schema: {
@@ -33,17 +35,20 @@ export class UsersController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all users' })
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a user by ID' })
   @ApiParam({ name: 'id', type: Number })
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a user by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiBody({
     description: 'Update an existing user',
@@ -62,6 +67,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a user by ID' })
   @ApiParam({ name: 'id', type: Number })
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);

@@ -9,13 +9,15 @@ import {
 } from '@nestjs/common';
 import { OrderItemsService } from './order-items.service';
 import { Prisma } from '@prisma/client';
-import { ApiBody, ApiParam } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Order Items')
 @Controller('order-items')
 export class OrderItemsController {
   constructor(private readonly orderItemsService: OrderItemsService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new order item' })
   @ApiBody({
     description: 'Create a new order item',
     schema: {
@@ -32,17 +34,20 @@ export class OrderItemsController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all order itens' })
   findAll() {
     return this.orderItemsService.findAll();
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a order item by ID' })
   @ApiParam({ name: 'id', type: Number })
   findOne(@Param('id') id: string) {
     return this.orderItemsService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a order item by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiBody({
     description: 'Update an existing order item',
@@ -63,6 +68,7 @@ export class OrderItemsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a order item by ID' })
   @ApiParam({ name: 'id', type: Number })
   remove(@Param('id') id: string) {
     return this.orderItemsService.remove(+id);

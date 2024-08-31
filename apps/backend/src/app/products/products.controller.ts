@@ -10,13 +10,15 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Prisma } from '@prisma/client';
-import { ApiBody, ApiQuery, ApiParam } from '@nestjs/swagger';
+import { ApiOperation, ApiBody, ApiQuery, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new product' })
   @ApiBody({
     description: 'Create a new product',
     schema: {
@@ -35,6 +37,7 @@ export class ProductsController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all products' })
   @ApiQuery({
     name: 'category',
     required: false,
@@ -46,12 +49,14 @@ export class ProductsController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get a product by ID' })
   @ApiParam({ name: 'id', type: Number })
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'Update a product by ID' })
   @ApiParam({ name: 'id', type: Number })
   @ApiBody({
     description: 'Update a product',
@@ -71,6 +76,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete a product by ID' })
   @ApiParam({ name: 'id', type: Number })
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
