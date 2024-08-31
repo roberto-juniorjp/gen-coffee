@@ -6,13 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { Prisma } from '@prisma/client';
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../auth/jwt.guard';
 
 @ApiTags('Categories')
 @Controller('categories')
+@UseGuards(JwtGuard)
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

@@ -7,13 +7,16 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { Prisma } from '@prisma/client';
 import { ApiOperation, ApiBody, ApiQuery, ApiParam, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from '../auth/jwt.guard';
 
 @ApiTags('Products')
 @Controller('products')
+@UseGuards(JwtGuard)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
