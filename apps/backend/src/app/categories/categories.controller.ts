@@ -9,12 +9,22 @@ import {
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { Prisma } from '@prisma/client';
+import { ApiBody, ApiParam } from '@nestjs/swagger';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
+  @ApiBody({
+    description: 'Create a new category',
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+      },
+    },
+  })
   create(@Body() createCategoryDto: Prisma.CategoryCreateInput) {
     return this.categoriesService.create(createCategoryDto);
   }
@@ -25,11 +35,22 @@ export class CategoriesController {
   }
 
   @Get(':id')
+  @ApiParam({ name: 'id', type: Number })
   findOne(@Param('id') id: string) {
     return this.categoriesService.findOne(+id);
   }
 
   @Patch(':id')
+  @ApiParam({ name: 'id', type: Number })
+  @ApiBody({
+    description: 'Update a category',
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', nullable: true },
+      },
+    },
+  })
   update(
     @Param('id') id: string,
     @Body() updateCategoryDto: Prisma.CategoryUpdateInput
@@ -38,6 +59,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: Number })
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(+id);
   }
