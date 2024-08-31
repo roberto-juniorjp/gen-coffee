@@ -10,11 +10,12 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
-import { ApiOperation, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiBody, ApiParam, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/jwt.guard';
 
 @ApiTags('Users')
 @Controller('users')
+@ApiBearerAuth()
 @UseGuards(JwtGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

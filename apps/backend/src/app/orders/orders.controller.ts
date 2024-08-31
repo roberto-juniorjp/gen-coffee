@@ -10,11 +10,12 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { Prisma } from '@prisma/client';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/jwt.guard';
 
 @ApiTags('Orders')
 @Controller('orders')
+@ApiBearerAuth()
 @UseGuards(JwtGuard)
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}

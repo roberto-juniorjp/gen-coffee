@@ -18,13 +18,18 @@ async function bootstrap() {
   .addTag('Users', 'Endpoints for managing users')
   .addTag('Orders', 'Endpoints for managing orders')
   .addTag('Order Items', 'Endpoints for managing order items')
+  .addBearerAuth()
   .build();
   
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: '*', // Ajuste conforme necessário
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
