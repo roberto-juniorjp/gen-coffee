@@ -6,12 +6,10 @@ import { DatabaseService } from '../database/database.service';
 export class UsersService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createUserDto: Prisma.UserCreateInput) {
-    // Verifica se os campos obrigatórios estão presentes
     if (!createUserDto.email || !createUserDto.password || !createUserDto.name) {
       throw new BadRequestException('Name, email, and password are required');
     }
 
-    // Verifica se o e-mail já está sendo usado
     const existingUser = await this.databaseService.user.findUnique({
       where: { email: createUserDto.email },
     });

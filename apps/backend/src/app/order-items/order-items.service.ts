@@ -8,7 +8,6 @@ export class OrderItemsService {
   async create(createOrderItemDto: Prisma.OrderItemCreateInput) {
     const { product, order } = createOrderItemDto;
 
-    // Verificar se os IDs de produto e pedido estão presentes
     if (!product?.connect?.id || !order?.connect?.id) {
       throw new BadRequestException('Both productId and orderId are required');
     }

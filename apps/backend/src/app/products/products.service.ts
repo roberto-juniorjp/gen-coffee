@@ -6,7 +6,6 @@ import { DatabaseService } from '../database/database.service';
 export class ProductsService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createProductDto: Prisma.ProductCreateInput) {
-    // Verifica se os campos obrigatórios estão presentes
     if (!createProductDto.name || createProductDto.price === undefined || !createProductDto.category) {
       throw new BadRequestException('Name, price, and category are required');
     }
