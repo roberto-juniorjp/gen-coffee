@@ -34,9 +34,10 @@ export class ProductsController {
         categoryId: { type: 'number' },
         isAvailable: { type: 'boolean' },
       },
+      required: ['name', 'price', 'categoryId'],
     },
   })
-  create(@Body() createProductDto: Prisma.ProductCreateInput) {
+  async create(@Body() createProductDto: Prisma.ProductCreateInput) {
     return this.productsService.create(createProductDto);
   }
 

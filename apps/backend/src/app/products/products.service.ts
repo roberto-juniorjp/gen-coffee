@@ -9,8 +9,18 @@ export class ProductsService {
     if (!createProductDto.name || createProductDto.price === undefined || !createProductDto.category) {
       throw new BadRequestException('Name, price, and category are required');
     }
-
-    return this.databaseService.product.create({ data: createProductDto });
+  
+    return this.databaseService.product.create({
+      data: {
+        name: createProductDto.name,
+        description: createProductDto.description,
+        price: createProductDto.price,
+        isAvailable: createProductDto.isAvailable,
+        category: {
+          connect: { id: createProductDto.category.connect.id }, // Use 'category' to connect by ID
+        },
+      },
+    });
   }
 
   async findAll(category?: string) {
