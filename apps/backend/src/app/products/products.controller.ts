@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   Query,
+  ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { Prisma } from '@prisma/client';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiOperation, ApiBody, ApiQuery, ApiParam, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/jwt.guard';
 
@@ -23,32 +25,14 @@ export class ProductsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiBody({
-    description: 'Create a new product',
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        description: { type: 'string', nullable: true },
-        price: { type: 'number' },
-        categoryId: { type: 'number' },
-        isAvailable: { type: 'boolean' },
-      },
-      required: ['name', 'price', 'categoryId'],
-    },
-  })
-  async create(@Body() createProductDto: Prisma.ProductCreateInput) {
+  @ApiBody({ type: CreateProductDto })
+  async create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all products' })
-  @ApiQuery({
-    name: 'category',
-    required: false,
-    description: 'Filter products by category',
-    type: String,
-  })
+  @ApiQuery({ name: 'category', required: false, description: 'Filter products by category' })
   findAll(@Query('category') category?: string) {
     return this.productsService.findAll(category);
   }
@@ -56,34 +40,25 @@ export class ProductsController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by ID' })
   @ApiParam({ name: 'id', type: Number })
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a product by ID' })
+  @ApiOperation({ summary: 'Update an existing product' })
   @ApiParam({ name: 'id', type: Number })
-  @ApiBody({
-    description: 'Update a product',
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string', nullable: true },
-        description: { type: 'string', nullable: true },
-        price: { type: 'number', nullable: true },
-        categoryId: { type: 'number', nullable: true },
-        isAvailable: { type: 'boolean', nullable: true },
-      },
-    },
-  })
-  update(@Param('id') id: string, @Body() updateProductDto: Prisma.ProductUpdateInput) {
-    return this.productsService.update(+id, updateProductDto);
+  @ApiBody({ type: UpdateProductDto })
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProductDto: UpdateProductDto
+  ) {
+    return this.productsService.update(id, updateProductDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a product by ID' })
   @ApiParam({ name: 'id', type: Number })
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.remove(id);
   }
 }

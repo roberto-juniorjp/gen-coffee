@@ -9,7 +9,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { Prisma } from '@prisma/client';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/jwt.guard';
 
@@ -22,16 +23,8 @@ export class CategoriesController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new category' })
-  @ApiBody({
-    description: 'Create a new category',
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-      },
-    },
-  })
-  create(@Body() createCategoryDto: Prisma.CategoryCreateInput) {
+  @ApiBody({ type: CreateCategoryDto })
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
   }
 
@@ -44,33 +37,26 @@ export class CategoriesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a category by ID' })
   @ApiParam({ name: 'id', type: Number })
-  findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return this.categoriesService.findOne(Number(id));
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a category by ID' })
-  @ApiParam({ name: 'id', type: Number })
-  @ApiBody({
-    description: 'Update a category',
-    schema: {
-      type: 'object',
-      properties: {
-        name: { type: 'string', nullable: true },
-      },
-    },
-  })
-  update(
-    @Param('id') id: string,
-    @Body() updateCategoryDto: Prisma.CategoryUpdateInput
-  ) {
-    return this.categoriesService.update(+id, updateCategoryDto);
+@ApiOperation({ summary: 'Update a category by ID' })
+@ApiParam({ name: 'id', type: Number })
+@ApiBody({ type: UpdateCategoryDto })
+  async update(
+    @Param('id') id: string, 
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  )
+  {
+    return this.categoriesService.update(Number(id), updateCategoryDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a category by ID' })
   @ApiParam({ name: 'id', type: Number })
-  remove(@Param('id') id: string) {
-    return this.categoriesService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return this.categoriesService.remove(Number(id));
   }
 }

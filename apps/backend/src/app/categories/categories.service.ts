@@ -1,16 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 import { DatabaseService } from '../database/database.service';
 
 @Injectable()
 export class CategoriesService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async create(createCategoryDto: Prisma.CategoryCreateInput) {
+
+  async create(createCategoryDto: CreateCategoryDto) {
     if (!createCategoryDto.name) {
       throw new BadRequestException('Category name is required');
     }
 
-    return this.databaseService.category.create({ data: createCategoryDto });
+    return this.databaseService.category.create({
+      data: createCategoryDto,
+    });
   }
 
   async findAll() {
@@ -25,15 +29,14 @@ export class CategoriesService {
     return category;
   }
 
-  async update(id: number, updateCategoryDto: Prisma.CategoryUpdateInput) {
+async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.databaseService.category.findUnique({ where: { id } });
     if (!category) {
       throw new BadRequestException('Category not found');
     }
-
     return this.databaseService.category.update({
       where: { id },
-      data: updateCategoryDto,
+      data: { name: updateCategoryDto.name },
     });
   }
 
