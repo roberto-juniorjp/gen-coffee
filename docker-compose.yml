@@ -34,12 +34,3 @@ services:
     volumes:
       - ./apps/backend:/app/backend
       - /app/backend/node_modules
-
-  frontend:
-    build:
-      context: .
-      dockerfile: docker/frontend/Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
