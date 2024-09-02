@@ -15,7 +15,9 @@
         "outputPath": "dist/apps/frontend",
         "main": "apps/frontend/src/main.ts",
         "tsConfig": "apps/frontend/tsconfig.app.json",
-        "assets": ["apps/frontend/src/assets"]
+        "assets": [
+          "apps/frontend/src/assets"
+        ]
       }
     },
     "serve": {
@@ -24,5 +26,15 @@
         "buildTarget": "frontend:build"
       }
     }
+  },
+  "devDependencies": {
+    "@angular/material": "^18.2.2"
+  },
+  "dependencies": {
+    "@angular/forms": "^18.2.2",
+    "@angular/service-worker": "^18.2.2",
+    "@auth0/angular-jwt": "^5.2.0",
+    "ngx-spinner": "^17.0.0",
+    "ngx-toastr": "^19.0.0"
   }
 }
