@@ -1,0 +1,16 @@
+:host {
+    position: absolute;
+    height: 80px;
+    left: 32px;
+    .menu-button {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        fa-icon {
+            font-size: 30px;
+            ::ng-deep svg path {
+                fill: var(--primary-color);
+            }
+        }
+    }
+}
