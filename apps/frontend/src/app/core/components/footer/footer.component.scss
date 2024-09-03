@@ -1,0 +1,11 @@
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    background-color: var(--primary-color);
+    p {
+        background-color: transparent;
+        color: var(--secondary-light-color);
+    }
+}
