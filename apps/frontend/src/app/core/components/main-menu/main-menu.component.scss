@@ -6,10 +6,14 @@
         height: 100%;
         display: flex;
         align-items: center;
-        fa-icon {
-            font-size: 30px;
-            ::ng-deep svg path {
-                fill: var(--primary-color);
+        button {
+            cursor: pointer;
+            border: none;
+            fa-icon {
+                font-size: 30px;
+                ::ng-deep svg path {
+                    fill: var(--primary-color);
+                }
             }
         }
     }
