@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--dark-color);
+  color: var(--almost-dark-color);
   background-color: var(--light-color);
   font-family: Roboto;
   border-color: var(--primary-light-color);
@@ -12,4 +12,8 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: Montserrat;
+}
+
+p, input {
+  font-size: 16px;
 }
