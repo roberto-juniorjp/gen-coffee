@@ -1,14 +1,23 @@
 :host {
+    max-width: 90%;
     height: 80px;
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
     justify-content: center;
     align-items: center;
-
     .search-bar-container{
+        display:flex;
+        flex-grow: 1;
+        justify-content: center;
         .search-bar {
+            display: flex;
+            flex-direction: row;
+            max-width: 800px;
+            width: 100%;
+            justify-content: center;
             input {
-                width: 350px;
+                width: 80%;
                 height: 50px;
                 border-radius: 5px;
                 border: none;
@@ -20,18 +29,24 @@
                 &:focus {
                     outline: none;
                 }
+                border-radius: 0;
             }
-            fa-icon {
-                ::ng-deep {
-                    background-color: transparent !important;
-                    position: absolute;
-                    translate: -36px 5px;
-                    margin: 10px;
-                    svg {
+            button {
+                cursor: pointer;
+                border: none;
+                padding: 0 15px;
+                background-color: var(--almost-light-color);
+                z-index: 1;
+                fa-icon {
+                    ::ng-deep {
                         background-color: transparent !important;
-                        path {
-                            fill: var(--primary-light-color);
+                        font-size: 16px;
+                        svg {
                             background-color: transparent !important;
+                            path {
+                                fill: var(--primary-light-color);
+                                background-color: transparent !important;
+                            }
                         }
                     }
                 }
