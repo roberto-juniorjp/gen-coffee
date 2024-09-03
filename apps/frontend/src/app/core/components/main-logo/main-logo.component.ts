@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './main-logo.component.scss'
 })
 export class MainLogoComponent {
-
+  mainLogo = "/assets/images/baconcoffee.png";
 }
