@@ -4,9 +4,9 @@ Gen Coffee é um sistema de menu digital para cafeterias, desenvolvido com Angul
 
 ## Índice
 
+- [Visão Geral do Projeto](visão-geral-do-projeto)
 - [Recursos](#recursos)
 - [Instalação](#instalação)
-- [Configuração](#configuração)
 - [Uso](#uso)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Contribuição](#contribuição)
@@ -86,8 +86,6 @@ Para instalar e executar o projeto, siga os passos abaixo:
     ```bash
     ./app_serve.sh
     ```
-
-## Configuração
 
 ## Uso
 
