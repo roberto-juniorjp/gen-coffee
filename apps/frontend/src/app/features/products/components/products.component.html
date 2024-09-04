@@ -1,20 +1,20 @@
+<!-- A barra de busca deve estar presente globalmente, então não a incluímos aqui -->
 <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
-  
-  <ul *ngIf="!errorMessage && products.length > 0" class="product-list">
-    <li *ngFor="let product of products" class="product-item">
-      <div class="product-detail product-name">{{ product.name }}</div>
-      <div class="product-detail product-description">{{ product.description }}</div>
-      <div class="product-detail product-price">{{ product.price | currency }}</div>
-      <div class="product-detail product-category">{{ getCategoryName(product.categoryId) }}</div>
-      <div class="product-detail product-availability {{ product.isAvailable ? 'available' : 'unavailable' }}">
-        {{ product.isAvailable ? 'Yes' : 'No' }}
-      </div>
-    </li>
-  </ul>
-  
-  <!-- Mensagem quando não há produtos -->
-  <div *ngIf="!errorMessage && products.length === 0" class="no-products">
-    No products available.
-  </div>
+  {{ errorMessage }}
+</div>
+
+<ul *ngIf="!errorMessage && filteredProducts.length > 0" class="product-list">
+  <li *ngFor="let product of filteredProducts" class="product-item">
+    <div class="product-detail product-name">{{ product.name }}</div>
+    <div class="product-detail product-description">{{ product.description }}</div>
+    <div class="product-detail product-price">{{ product.price | currency }}</div>
+    <div class="product-detail product-category">{{ getCategoryName(product.categoryId) }}</div>
+    <div class="product-detail product-availability" [ngClass]="{'available': product.isAvailable, 'unavailable': !product.isAvailable}">
+      {{ product.isAvailable ? 'Yes' : 'No' }}
+    </div>
+  </li>
+</ul>
+
+<div *ngIf="!errorMessage && filteredProducts.length === 0" class="no-products">
+  No products available.
+</div>

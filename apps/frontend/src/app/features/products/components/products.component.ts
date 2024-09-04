@@ -7,13 +7,14 @@ import { ApiService } from '../../../core/services/api.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
   products: any[] = [];
-  categories: { id: number; name: string }[] = [];
-  categoryMap: { [key: number]: string } = {};
+  filteredProducts: any[] = [];
+  categories: any[] = [];
   errorMessage: string | null = null;
+  searchTerm: string = '';
 
   constructor(private apiService: ApiService) {}
 
@@ -22,13 +23,13 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts(): void {
-    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjU0NTgyMjMsImV4cCI6MTc1Njk5NDIyMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ylve7-AXHN5GXG5KkWSpJkw0V0JdwELS3TFGAEVDfkE'; // Token de exemplo
+    const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjU0NTgyMjMsImV4cCI6MTc1Njk5NDIyMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ylve7-AXHN5GXG5KkWSpJkw0V0JdwELS3TFGAEVDfkE'; // Token atualizado
     this.apiService.setToken(token); // Define o token
 
-    // Carregar produtos
     this.apiService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
+        this.filteredProducts = this.filterProducts(this.searchTerm);
         if (this.products.length === 0) {
           this.errorMessage = 'No products available.';
         } else {
@@ -38,18 +39,12 @@ export class ProductsComponent implements OnInit {
       error: (err) => {
         console.error('Error fetching products', err);
         this.errorMessage = 'Error fetching products';
-      },
+      }
     });
 
-    // Carregar categorias
     this.apiService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        this.categoryMap = this.categories.reduce((map, category) => {
-          map[category.id] = category.name;
-          return map;
-        }, {} as { [key: number]: string });
-
         if (this.categories.length === 0) {
           this.errorMessage = 'No categories available.';
         } else {
@@ -59,11 +54,24 @@ export class ProductsComponent implements OnInit {
       error: (err) => {
         console.error('Error fetching categories', err);
         this.errorMessage = 'Error fetching categories';
-      },
+      }
     });
   }
 
+  onSearch(searchTerm: string): void {
+    this.searchTerm = searchTerm;
+    this.filteredProducts = this.filterProducts(searchTerm);
+  }
+
+  private filterProducts(term: string): any[] {
+    return this.products.filter(product => 
+      product.name.toLowerCase().includes(term.toLowerCase()) ||
+      product.description.toLowerCase().includes(term.toLowerCase())
+    );
+  }
+
   getCategoryName(categoryId: number): string {
-    return this.categoryMap[categoryId] || 'Unknown Category';
+    const category = this.categories.find(cat => cat.id === categoryId);
+    return category ? category.name : 'Unknown';
   }
 }

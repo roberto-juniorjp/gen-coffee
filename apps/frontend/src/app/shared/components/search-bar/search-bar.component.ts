@@ -1,5 +1,5 @@
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Component } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -7,8 +7,15 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
   standalone: true,
   imports: [FontAwesomeModule],
   templateUrl: './search-bar.component.html',
-  styleUrl: './search-bar.component.scss'
+  styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
-  faSearch = faSearch
+  faSearch = faSearch;
+
+  @Output() search = new EventEmitter<string>();
+
+  onSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.search.emit(input.value);
+  }
 }
