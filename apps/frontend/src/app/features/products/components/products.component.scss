@@ -1,0 +1,102 @@
+// Variáveis de estilo
+$primary-bg: #f5f5f5;
+$card-bg: #fff;
+$border-color: #ddd;
+$text-color: #333;
+$price-color: #007bff;
+$error-color: #dc3545;
+$success-color: #28a745;
+$font-family: 'Helvetica Neue', sans-serif;
+
+// Lista de produtos
+:host {
+    .product-list {
+        width: 100%;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        padding: 32px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+
+    .product-item {
+        width: 100%;
+        max-width: 686px;
+        background-color: $card-bg;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border: 1px solid $border-color;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-detail {
+        font-family: $font-family;
+        margin: 0;
+
+        &.product-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: $text-color;
+        }
+
+        &.product-description {
+            color: $text-color;
+            font-style: italic;
+            font-size: 0.95em;
+        }
+
+        &.product-price {
+            color: $price-color;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        &.product-category {
+            color: $text-color;
+            font-size: 0.9em;
+        }
+
+        &.product-availability {
+            font-weight: bold;
+            font-size: 1em;
+
+            &.available {
+            color: $success-color;
+            }
+
+            &.unavailable {
+            color: $error-color;
+            }
+        }
+        }
+    }
+    }
+}
+
+// Mensagem quando não há produtos
+.no-products {
+  text-align: center;
+  font-style: italic;
+  color: $text-color;
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+// Mensagem de erro
+.error {
+  color: $error-color;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
