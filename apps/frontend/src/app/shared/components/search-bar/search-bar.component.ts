@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [FontAwesomeModule, FormsModule], // Adicione FormsModule aqui
+  imports: [FontAwesomeModule, FormsModule],
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })

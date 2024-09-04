@@ -6,22 +6,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000'; // URL base
+  private apiUrl = 'http://localhost:3000';
   private token: string | null = null;
 
   constructor(private http: HttpClient) {}
-
-  // Método para definir o token
+  
   setToken(token: string): void {
-    this.token = `Bearer ${token}`; // Armazena o token no formato 'Bearer TOKEN'
+    this.token = `Bearer ${token}`;
   }
 
-  // Método para obter o token
   getToken(): string | null {
-    return this.token; // Retorna o token armazenado
+    return this.token;
   }
 
-  // Métodos para consumir a API
   getProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/products`);
   }
