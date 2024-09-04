@@ -1,101 +1,135 @@
-# GenCoffee
+# Gen Coffee - Digital Menu System
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Gen Coffee é um sistema de menu digital para cafeterias, desenvolvido com Angular 18 no frontend e NestJS no backend. O projeto fornece uma interface moderna para visualizar e gerenciar um cardápio de cafeteria, com funcionalidades administrativas para gerenciar produtos e categorias.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Índice
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- [Recursos](#recursos)
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Uso](#uso)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-## Run tasks
+## Recursos
 
-To run the dev server for your app, use:
+- Visualização de produtos e categorias do cardápio
+- Funcionalidade de pesquisa de produtos
+- Interface administrativa para gerenciar produtos e categorias
+- Layout moderno e responsivo
 
-```sh
-npx nx serve backend
-```
+## Instalação
 
-To create a production bundle:
+Para instalar e executar o projeto, siga os passos abaixo:
 
-```sh
-npx nx build backend
-```
+### Pré-requisitos
 
-To see all available targets to run for a project, run:
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [npm](https://www.npmjs.com/) (ou [yarn](https://yarnpkg.com/))
 
-```sh
-npx nx show project backend
-```
-        
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+### Passos de Instalação
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+1. **Clone o Repositório**
 
-## Add new projects
+    ```bash
+    git clone https://github.com/roberto-juniorjp/gen-coffee.git
+    cd gen-coffee
+    ```
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+2. **Instale as Dependências do Backend**
 
-Use the plugin's generator to create new projects.
+    Navegue até o diretório do backend e instale as dependências:
 
-To generate a new application, use:
+    ```bash
+    cd apps/backend
+    npm install
+    ```
 
-```sh
-npx nx g @nx/node:app demo
-```
+3. **Instale as Dependências do Frontend**
 
-To generate a new library, use:
+    Navegue até o diretório do frontend e instale as dependências:
 
-```sh
-npx nx g @nx/node:lib mylib
-```
+    ```bash
+    cd ../frontend
+    npm install
+    ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+4. **Configure o Banco de Dados**
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+    Configure o banco de dados PostgreSQL e atualize o arquivo de configuração do Prisma com suas credenciais.
 
-## Set up CI!
+5. **Execute as Migrations do Prisma**
 
-### Step 1
+    ```bash
+    npx prisma migrate deploy
+    ```
 
-To connect to Nx Cloud, run the following command:
+6. **Inicie o Backend**
 
-```sh
-npx nx connect
-```
+    ```bash
+    cd ../backend
+    npm run start:dev
+    ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+7. **Inicie o Frontend**
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+    ```bash
+    cd ../frontend
+    npm start
+    ```
 
-### Step 2
+## Configuração
 
-Use the following command to configure a CI workflow for your workspace:
+### Configuração do Backend
 
-```sh
-npx nx g ci-workflow
-```
+- **Arquivo `.env`**: Configure as variáveis de ambiente no arquivo `.env` para o backend.
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Configuração do Frontend
 
-## Install Nx Console
+- **Arquivo `src/environments/environment.ts`**: Atualize o ambiente com a URL base da API.
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Uso
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Acesse a aplicação frontend em [http://localhost:4200](http://localhost:4200).
+- Acesse o backend em [http://localhost:3000/api](http://localhost:3000/api) para interações com a API.
 
-## Useful links
+### Funcionalidades
 
-Learn more:
+- **Pesquisa de Produtos**: Utilize a barra de busca para filtrar produtos no cardápio.
+- **Visualização de Produtos e Categorias**: Navegue pelos produtos e categorias no frontend.
+- **Administração de Produtos**: Acesse o painel administrativo para gerenciar produtos e categorias.
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/node?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Estrutura do Projeto
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Diretórios e Arquivos
+
+- **`apps/backend`**: Contém o código do backend, desenvolvido com NestJS.
+  - **`src`**: Código fonte do backend.
+  - **`prisma`**: Arquivos de configuração do Prisma.
+  - **`package.json`**: Dependências e scripts do backend.
+
+- **`apps/frontend`**: Contém o código do frontend, desenvolvido com Angular 18.
+  - **`src`**: Código fonte do frontend.
+  - **`angular.json`**: Configuração do Angular.
+  - **`package.json`**: Dependências e scripts do frontend.
+
+- **`libs`**: Biblioteca compartilhada entre o frontend e o backend.
+
+## Contribuição
+
+Contribuições são bem-vindas! Por favor, siga as diretrizes de contribuição abaixo:
+
+1. Fork o repositório.
+2. Crie uma branch para a sua feature (`git checkout -b feature/MinhaNovaFeature`).
+3. Faça suas alterações e commit (`git commit -am 'Adiciona nova feature'`).
+4. Push para a branch (`git push origin feature/MinhaNovaFeature`).
+5. Abra um Pull Request.
+
+## Licença
+
+Este projeto é licenciado sob a [Licença MIT](LICENSE).
+
+---
+
+Para mais informações, consulte a documentação adicional ou entre em contato com o desenvolvedor principal.
