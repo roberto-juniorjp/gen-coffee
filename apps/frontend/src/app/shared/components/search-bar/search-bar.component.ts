@@ -1,21 +1,23 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { SearchBarService } from '../../services/search-bar.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, FormsModule], // Adicione FormsModule aqui
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent {
   faSearch = faSearch;
+  searchTerm = '';
 
-  @Output() search = new EventEmitter<string>();
+  constructor(private searchBarService: SearchBarService) {}
 
-  onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    this.search.emit(input.value);
+  onSearch(): void {
+    this.searchBarService.setSearchTerm(this.searchTerm);
   }
 }

@@ -1,4 +1,3 @@
-<!-- A barra de busca deve estar presente globalmente, então não a incluímos aqui -->
 <div *ngIf="errorMessage" class="error">
   {{ errorMessage }}
 </div>
@@ -15,6 +14,7 @@
   </li>
 </ul>
 
+<!-- Mensagem quando não há produtos -->
 <div *ngIf="!errorMessage && filteredProducts.length === 0" class="no-products">
   No products available.
 </div>
