@@ -12,11 +12,20 @@ Gen Coffee é um sistema de menu digital para cafeterias, desenvolvido com Angul
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 
+## Visão Geral do Projeto
+
+Devido limitações de tempo, tanto o backend como o frontend se limitaram apenas a visualização de produtos. Eu havia projetado a aplicação para ter cadastro de usuários (visitante/administrador), cadastro e visualização de pedidos e painel de gerenciamento de usuários e pedidos. Todos esses features foram retirados do escopo do MVP para que sejam desenvolvidos posteriormente.
+
+- Infraestrutura possui Docker como solução para conteinerização
+- O Backend foi desenvolvido com Nest, Prisma e JWT.
+- O Frontend foi desenvolvido usando Angular, FontAwesome e JWT.
+
+De maneira geral, o projeto foi bastante desafiador por algumas decisões que não terminaram sendo tao interessantes para mim, como a utilização de Monorepo NX e outras soluções que eu fiz questão de inserir como Docker. Tanto o Monorepo, como o Docker e até mesmo o Nest + Prisma foram meus primeiros contatos com tais tecnologias, apesar de eu já saber da existência delas e como elas funcionam.
+
 ## Recursos
 
 - Visualização de produtos e categorias do cardápio
 - Funcionalidade de pesquisa de produtos
-- Interface administrativa para gerenciar produtos e categorias
 - Layout moderno e responsivo
 
 ## Instalação
@@ -37,13 +46,13 @@ Para instalar e executar o projeto, siga os passos abaixo:
     cd gen-coffee
     ```
 
-2. **Instale as Dependências do Backend**
+2. **Rode os Scripts do Docker**
 
-    Navegue até o diretório do backend e instale as dependências:
+    Navegue até o diretório do Docker e rode o script:
 
     ```bash
-    cd apps/backend
-    npm install
+    cd docker
+    ./generate_docker.sh
     ```
 
 3. **Instale as Dependências do Frontend**
@@ -51,70 +60,56 @@ Para instalar e executar o projeto, siga os passos abaixo:
     Navegue até o diretório do frontend e instale as dependências:
 
     ```bash
-    cd ../frontend
+    cd ../apps/frontend
     npm install
     ```
 
 4. **Configure o Banco de Dados**
 
-    Configure o banco de dados PostgreSQL e atualize o arquivo de configuração do Prisma com suas credenciais.
+    Instale o banco de dados PostgreSQL
+    Atualize o arquivo de configuração do Prisma com as seguintes credenciais:
+    ```
+    POSTGRES_DB: coffee
+    POSTGRES_USER: robertojunior
+    POSTGRES_PASSWORD: mytechnicaltest
+    ```
 
 5. **Execute as Migrations do Prisma**
 
     ```bash
+    cd ../..
     npx prisma migrate deploy
     ```
 
-6. **Inicie o Backend**
+6. **Inicie Todos os Serviços**
 
     ```bash
-    cd ../backend
-    npm run start:dev
-    ```
-
-7. **Inicie o Frontend**
-
-    ```bash
-    cd ../frontend
-    npm start
+    ./app_serve.sh
     ```
 
 ## Configuração
 
-### Configuração do Backend
-
-- **Arquivo `.env`**: Configure as variáveis de ambiente no arquivo `.env` para o backend.
-
-### Configuração do Frontend
-
-- **Arquivo `src/environments/environment.ts`**: Atualize o ambiente com a URL base da API.
-
 ## Uso
 
 - Acesse a aplicação frontend em [http://localhost:4200](http://localhost:4200).
-- Acesse o backend em [http://localhost:3000/api](http://localhost:3000/api) para interações com a API.
+- Acesse o backend em [http://localhost:3000/api/docs](http://localhost:3000/api/docs) para interações com a API.
+- Utilize a chave de autenticação se necessário:
+```
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjU0NTgyMjMsImV4cCI6MTc1Njk5NDIyMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.ylve7-AXHN5GXG5KkWSpJkw0V0JdwELS3TFGAEVDfkE
+```
+- OBS: Esta chave foi gerada utilizando o segredo my-technical-test-secret através da criptografia HS256 e se encontra no front através do JWT. Você só precisará utilizá-la adicionalmente caso queira manipular o Swagger.
 
 ### Funcionalidades
 
 - **Pesquisa de Produtos**: Utilize a barra de busca para filtrar produtos no cardápio.
-- **Visualização de Produtos e Categorias**: Navegue pelos produtos e categorias no frontend.
-- **Administração de Produtos**: Acesse o painel administrativo para gerenciar produtos e categorias.
 
 ## Estrutura do Projeto
 
 ### Diretórios e Arquivos
 
 - **`apps/backend`**: Contém o código do backend, desenvolvido com NestJS.
-  - **`src`**: Código fonte do backend.
-  - **`prisma`**: Arquivos de configuração do Prisma.
-  - **`package.json`**: Dependências e scripts do backend.
 
 - **`apps/frontend`**: Contém o código do frontend, desenvolvido com Angular 18.
-  - **`src`**: Código fonte do frontend.
-  - **`angular.json`**: Configuração do Angular.
-  - **`package.json`**: Dependências e scripts do frontend.
-
-- **`libs`**: Biblioteca compartilhada entre o frontend e o backend.
 
 ## Contribuição
 
